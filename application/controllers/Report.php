@@ -11,20 +11,10 @@ class Report extends CI_Controller
     }
 
     public function search()
-    // {
-    //     $date = $this->input->post('date');
-    //     $status = $this->input->post('status');
-    //     $search_report = $this->Tblrecharge_model->get_search_report($date, $status);
-    //     echo json_encode($search_report);
 
-    // }
     {
         $date = $this->input->post('date');
         $status = $this->input->post('status');
-
-        // echo $status;
-        // exit;
-        // Call the model method to fetch search report
         $search_report = $this->Tblrecharge_model->get_search_report($date, $status);
 
         foreach ($search_report as &$item) {
@@ -32,19 +22,16 @@ class Report extends CI_Controller
             $pending = (int) $item['pending_amount'];
             $failure = (int) $item['failure_amount'];
             $success = (int) $item['success_amount'];
-            
-            // Calculate percentages
+
             $success_percentage = ($total != 0) ? ($success / $total) * 100 : 0;
             $failure_percentage = ($total != 0) ? ($failure / $total) * 100 : 0;
             $pending_percentage = ($total != 0) ? ($pending / $total) * 100 : 0;
-            
-            // Add percentages to the array
+
             $item['success_in_percentage'] = number_format($success_percentage, 2);
             $item['failure_in_percentage'] = number_format($failure_percentage, 2);
             $item['pending_in_percentage'] = number_format($pending_percentage, 2);
         }
 
-        // Return JSON response
         $this->output->set_content_type('application/json')->set_output(json_encode($search_report));
     }
 

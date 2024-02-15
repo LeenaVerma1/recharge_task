@@ -27,19 +27,6 @@ class Tblrecharge_model extends CI_Model
         return $this->db->insert('tblrecharge', $data);
     }
 
-    // public function get_search_report($date, $status)
-    // {
-    //     $this->db->select('recharge_date, company, SUM(CASE WHEN status = "pending" THEN amount ELSE 0 END) as pending, SUM(CASE WHEN status = "Success" THEN amount ELSE 0 END) as Success, SUM(CASE WHEN status = "Failure" THEN amount ELSE 0 END) as Failure, SUM(amount) as credit');
-    //     $this->db->from('tblrecharge');
-    //     $this->db->where('recharge_date', $date);
-    //     if ($status !== 'All') {
-    //         $this->db->where('status', $status);
-    //     }
-    //     $this->db->group_by('company,date');
-    //     $query = $this->db->get();
-    //     return $query->result_array();
-    // }
-
     public function get_search_report($date, $status)
     {
         $this->db->select('DATE_FORMAT(recharge_date, "%d-%m-%Y") as date, company, 
